@@ -26,7 +26,7 @@ Free and open-source software is a key enabler of modern scientific computing.
 This project uses many open-source software packages, including:
 
 - `pvlib <https://pvlib-python.readthedocs.io>`_: retrieving PSM3 data and solar/irradiance modeling
-- `cartopy <https://scitools.org.uk/cartopy/docs/latest/>`_: mapping
+- `cartopy <https://scitools.org.uk/cartopy/docs/latest/>`_ and `openlayers <https://openlayers.org/>`_: mapping
 - `matplotlib <https://matplotlib.org/>`_: plotting
 - `pandas <https://pandas.pydata.org/docs>`_ and `numpy <https://numpy.org/doc/stable/>`_: number crunching
 - `sphinx <https://www.sphinx-doc.org>`_ and `jupyter <https://jupyter.org/>`_: building the website
@@ -41,10 +41,12 @@ This project uses many open-source software packages, including:
    pages/cloudy-disc
    pages/data-aggregation
    pages/hsds-auxiliary
+   pages/pixel-boundaries
    pages/rate-limits
    pages/rollover
    pages/solar-position
    pages/spatial-extent
+   pages/map
 
 
 Indices and tables

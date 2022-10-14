@@ -1,0 +1,145 @@
+
+<!--<script crossorigin="anonymous" src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=geometry,places&ext=.js"></script>-->
+<!--<script src="https://maps.googleapis.com/maps/api/js"></script>-->
+
+<script src="https://cdn.jsdelivr.net/npm/ol@v7.1.0/dist/ol.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.1.0/ol.css">
+
+<script src="https://unpkg.com/ol-layerswitcher@4.1.0"></script>
+<link rel="stylesheet" href="https://unpkg.com/ol-layerswitcher@4.1.0/dist/ol-layerswitcher.css" />
+
+
+<div id="map" style="height: 580px;"></div>
+<div id="mouse-position"></div>
+
+<script>
+function make_grid_layer(opts){
+
+    var source = new ol.source.Vector();
+    var geom;
+
+    // lines of longitude
+    var lon = opts.minlon;
+    var edge = opts.maxlon+(opts.cellSize/2);
+    while (lon<edge){
+        geom = new ol.geom.LineString([[lon, opts.minlat], [lon, opts.maxlat]]);
+        source.addFeature(
+            new ol.Feature({
+                geometry: geom.transform('EPSG:4326', 'EPSG:3857')
+            })
+        );
+        lon += opts.cellSize;
+    }
+
+    // lines of latitude
+    var lat = opts.minlat;
+    var edge = opts.maxlat+(opts.cellSize/2);
+    while (lat<edge){
+        geom = new ol.geom.LineString([[opts.minlon, lat], [opts.maxlon, lat]]);
+        source.addFeature(
+            new ol.Feature({
+                geometry: geom.transform('EPSG:4326', 'EPSG:3857')
+            })
+        );
+        lat += opts.cellSize;
+    }
+
+    var layer = new ol.layer.Vector({
+        title: opts.name,
+        source: source,
+        style: new ol.style.Style({
+            stroke: new ol.style.Stroke({
+                color: opts.color,
+                width: 1
+            })
+        }),
+        maxResolution: opts.maxResolution
+    });
+
+    return layer;
+}
+
+function init(){
+    view = new ol.View({
+        minZoom: 4,
+        maxZoom: 15,
+        extent: ol.proj.transformExtent([-125, -21, -66.5, 60], 'EPSG:4326', 'EPSG:3857'),
+        center: ol.proj.transform([-80, 40], 'EPSG:4326','EPSG:3857'),
+        zoom: 12
+    });
+
+    const mousePositionControl = new ol.control.MousePosition({
+        coordinateFormat: ol.coordinate.createStringXY(4),
+        projection: 'EPSG:4326',
+        className: 'custom-mouse-position',
+        target: document.getElementById('mouse-position'),
+     });
+
+    map = new ol.Map({
+        target: "map",
+        view: view,
+        controls: ol.control.defaults.defaults().extend([mousePositionControl])
+    });
+    
+    
+    // Base Layers
+    
+    base_group = new ol.layer.Group({title: "Base Layer"});
+    map.addLayer(base_group);
+    var base_layers = base_group.getLayers();
+
+    base_layers.push(new ol.layer.Tile({
+        title: 'OSM',
+        source: new ol.source.OSM(),
+        visible: true,
+        type: 'base'
+    }));
+
+    base_layers.push(new ol.layer.Tile({
+        title: "NACSE Terrain",
+        source: new ol.source.XYZ({
+            url: "https://tile7.nacse.org/basemap/{z}/{x}/{y}.png"
+        }),
+        visible: false,
+        type: 'base'
+    }));
+    
+    base_layers.push(new ol.layer.Tile({
+        title: "ESRI Satellite",
+        source: new ol.source.XYZ({
+            url:"http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+        }),
+        visible: false,
+        type: 'base'
+    }));
+    
+    
+    // Overlays
+    
+    overlay_group = new ol.layer.Group({title: "Overlays"});
+    map.addLayer(overlay_group);
+    var overlays = overlay_group.getLayers();
+    
+    var grid_layer_4km = make_grid_layer({
+        minlon: -180,
+        maxlon: -22.5,
+        minlat: -21,
+        maxlat: 60,
+        cellSize: 0.04,
+        name: "PSM3 4 km",
+        maxResolution: 306,
+    });
+    overlays.push(grid_layer_4km);
+    
+    
+    // User Interface
+    var layer_switcher = new ol.control.LayerSwitcher({
+         tipLabel: 'Layers'
+    });
+    map.addControl(layer_switcher);
+}
+
+$(window).on('load', function() {
+    init();
+});
+</script>
