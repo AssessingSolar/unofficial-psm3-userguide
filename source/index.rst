@@ -47,6 +47,7 @@ This project uses many open-source software packages, including:
    pages/solar-position
    pages/spatial-extent
    pages/map
+   pages/tmy-vs-single
 
 
 Indices and tables
