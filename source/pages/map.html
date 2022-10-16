@@ -59,8 +59,18 @@ function make_grid_layer(opts){
     return layer;
 }
 
+function snapToCenter(lat, lon, resolution){
+    var invRes = Math.round(1/resolution);
+    var latRounded = Math.round(lat * invRes) / invRes;
+    var lonRounded = Math.round(lon * invRes) / invRes;
+    return {
+        lat: latRounded,
+        lon: lonRounded,
+    };
+}
+
 function init(){
-    view = new ol.View({
+    var view = new ol.View({
         minZoom: 4,
         maxZoom: 15,
         extent: ol.proj.transformExtent([-125, -21, -66.5, 60], 'EPSG:4326', 'EPSG:3857'),
@@ -80,11 +90,11 @@ function init(){
         view: view,
         controls: ol.control.defaults.defaults().extend([mousePositionControl])
     });
-    
-    
+
+
     // Base Layers
-    
-    base_group = new ol.layer.Group({title: "Base Layer"});
+
+    var base_group = new ol.layer.Group({title: "Base Layer"});
     map.addLayer(base_group);
     var base_layers = base_group.getLayers();
 
@@ -103,7 +113,7 @@ function init(){
         visible: false,
         type: 'base'
     }));
-    
+
     base_layers.push(new ol.layer.Tile({
         title: "ESRI Satellite",
         source: new ol.source.XYZ({
@@ -112,14 +122,26 @@ function init(){
         visible: false,
         type: 'base'
     }));
-    
-    
+
+
     // Overlays
-    
-    overlay_group = new ol.layer.Group({title: "Overlays"});
+
+    var overlay_group = new ol.layer.Group({title: "Overlays"});
     map.addLayer(overlay_group);
     var overlays = overlay_group.getLayers();
-    
+
+    var grid_layer_2km = make_grid_layer({
+        minlon: -180,
+        maxlon: -22.5,
+        minlat: -21,
+        maxlat: 60,
+        cellSize: 0.02,
+        name: "PSM3 2 km",
+        maxResolution: 306,
+        color: "#ff0000",
+    });
+    overlays.push(grid_layer_2km);
+
     var grid_layer_4km = make_grid_layer({
         minlon: -180,
         maxlon: -22.5,
@@ -130,13 +152,54 @@ function init(){
         maxResolution: 306,
     });
     overlays.push(grid_layer_4km);
-    
-    
+
+    var vectorSource = new ol.source.Vector();
+    var vectorLayer = new ol.layer.Vector({
+        title: "Active Pixel",
+        source: vectorSource,
+    });
+    overlays.push(vectorLayer);
+
     // User Interface
     var layer_switcher = new ol.control.LayerSwitcher({
          tipLabel: 'Layers'
     });
     map.addControl(layer_switcher);
+        
+    var activePixelCoord = {lat: 0, lon:0};
+    
+    map.on('pointermove', function(evt){
+        if(!vectorLayer.state_.visible){
+            return;
+        }
+        var coords = ol.proj.toLonLat(evt.coordinate);
+        var lat = coords[1];
+        var lon = coords[0];
+
+        var pixelWidth;
+        if(grid_layer_2km.state_.visible){
+            pixelWidth = 0.02;
+        } else if(grid_layer_4km.state_.visible){
+            pixelWidth = 0.04;
+        } else {
+            return;
+        }
+
+        var rounded = snapToCenter(lat, lon, pixelWidth);
+        if((activePixelCoord.lat != rounded.lat) ||
+           (activePixelCoord.lon != rounded.lon)){
+            activePixelCoord.lat = rounded.lat;
+            activePixelCoord.lon = rounded.lon;
+            var minPoint = [rounded.lon - pixelWidth/2 + 0.001, rounded.lat - pixelWidth/2 + 0.001];
+            var maxPoint = [rounded.lon + pixelWidth/2 - 0.001, rounded.lat + pixelWidth/2 - 0.001];
+            var polygonFeature = new ol.Feature(
+                ol.geom.Polygon.fromExtent(minPoint.concat(maxPoint)).transform('EPSG:4326','EPSG:3857')
+            );
+            vectorSource.clear();
+            vectorSource.addFeature(polygonFeature);
+            vectorSource.changed();
+        }
+    });
 }
 
 $(window).on('load', function() {
