@@ -1,18 +1,46 @@
 
-<!--<script crossorigin="anonymous" src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=geometry,places&ext=.js"></script>-->
-<!--<script src="https://maps.googleapis.com/maps/api/js"></script>-->
-
 <script src="https://cdn.jsdelivr.net/npm/ol@v7.1.0/dist/ol.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.1.0/ol.css">
 
 <script src="https://unpkg.com/ol-layerswitcher@4.1.0"></script>
 <link rel="stylesheet" href="https://unpkg.com/ol-layerswitcher@4.1.0/dist/ol-layerswitcher.css" />
 
+<style>
+.ol-mouse-position {
+  background-color: #ffffff;
+  border: 1px solid black;
+}
+
+.custom-infobox {
+  top: 65px;
+  left: .5em;
+  background-color: #ffffff;
+  border: 1px solid black;
+  padding: 10px;
+}
+
+.infobox-entry {
+  margin:0;
+}
+</style>
 
 <div id="map" style="height: 580px;"></div>
-<div id="mouse-position"></div>
 
 <script>
+
+class CustomInfoBox extends ol.control.Control {
+
+  constructor(opt_options) {
+    const element = document.createElement('div');
+    element.className = 'custom-infobox ol-control';
+    element.id = 'custom-infobox';
+
+    super({
+      element: element,
+    });
+  }
+}
+
 function make_grid_layer(opts){
 
     var source = new ol.source.Vector();
@@ -79,16 +107,16 @@ function init(){
     });
 
     const mousePositionControl = new ol.control.MousePosition({
-        coordinateFormat: ol.coordinate.createStringXY(4),
+        coordinateFormat: function(coord) {
+            return ol.coordinate.format(coord, "Mouse Position: {y}, {x}", 6);
+        },
         projection: 'EPSG:4326',
-        className: 'custom-mouse-position',
-        target: document.getElementById('mouse-position'),
      });
 
     map = new ol.Map({
         target: "map",
         view: view,
-        controls: ol.control.defaults.defaults().extend([mousePositionControl])
+        controls: ol.control.defaults.defaults().extend([mousePositionControl, new CustomInfoBox()])
     });
 
 
@@ -160,16 +188,31 @@ function init(){
     });
     overlays.push(vectorLayer);
 
+
     // User Interface
+
     var layer_switcher = new ol.control.LayerSwitcher({
          tipLabel: 'Layers'
     });
     map.addControl(layer_switcher);
-        
+
     var activePixelCoord = {lat: 0, lon:0};
-    
+
+    var activePixelIsPinned = false;
+
+    map.on('click', function(evt) {
+        if(activePixelIsPinned){
+            vectorSource.clear();
+            vectorSource.changed();
+        }
+        activePixelIsPinned = !activePixelIsPinned;
+    });
+
     map.on('pointermove', function(evt){
         if(!vectorLayer.state_.visible){
+            return;
+        }
+        if(activePixelIsPinned){
             return;
         }
         var coords = ol.proj.toLonLat(evt.coordinate);
@@ -190,14 +233,29 @@ function init(){
            (activePixelCoord.lon != rounded.lon)){
             activePixelCoord.lat = rounded.lat;
             activePixelCoord.lon = rounded.lon;
-            var minPoint = [rounded.lon - pixelWidth/2 + 0.001, rounded.lat - pixelWidth/2 + 0.001];
-            var maxPoint = [rounded.lon + pixelWidth/2 - 0.001, rounded.lat + pixelWidth/2 - 0.001];
+            var lower = rounded.lat - pixelWidth/2;
+            var upper = rounded.lat + pixelWidth/2;
+            var left = rounded.lon - pixelWidth/2;
+            var right = rounded.lon + pixelWidth/2;
+            var minPoint = [left + 0.001, lower + 0.001];
+            var maxPoint = [right - 0.001, upper - 0.001];
             var polygonFeature = new ol.Feature(
                 ol.geom.Polygon.fromExtent(minPoint.concat(maxPoint)).transform('EPSG:4326','EPSG:3857')
             );
             vectorSource.clear();
             vectorSource.addFeature(polygonFeature);
             vectorSource.changed();
+
+            var width = ol.sphere.getDistance([left, lower], [right, lower]) / 1000;
+            var height = ol.sphere.getDistance([left, lower], [left, upper]) / 1000;
+            document.getElementById('custom-infobox').innerHTML = (
+                '<b>Highlighted Pixel:</b>' +
+                '<p class="infobox-entry"><b>Lat:</b> ' + lower.toFixed(2) + ' to ' + upper.toFixed(2) + '</p>' +
+                '<p class="infobox-entry"><b>Lon:</b> ' + left.toFixed(2) + ' to ' + right.toFixed(2) + '</p>' +
+                '<p class="infobox-entry"><b>Width [km]:</b> ' + width.toFixed(4) + '</p>' +
+                '<p class="infobox-entry"><b>Height [km]:</b> ' + height.toFixed(4) + '</p>' +
+                '<p class="infobox-entry"><b>Aspect Ratio:</b> ' + (width/height).toFixed(3) + '</p>'
+            );
         }
     });
 }
