@@ -78,7 +78,7 @@ function make_grid_layer(opts){
         style: new ol.style.Style({
             stroke: new ol.style.Stroke({
                 color: opts.color,
-                width: 1
+                width: opts.width,
             })
         }),
         maxResolution: opts.maxResolution
@@ -110,7 +110,7 @@ function init(){
         minZoom: 4,
         maxZoom: 15,
         extent: ol.proj.transformExtent([-125, -21, -66.5, 60], 'EPSG:4326', 'EPSG:3857'),
-        center: ol.proj.transform([-80, 40], 'EPSG:4326','EPSG:3857'),
+        center: ol.proj.transform([-105.17, 39.74], 'EPSG:4326','EPSG:3857'),
         zoom: 12
     });
 
@@ -151,9 +151,20 @@ function init(){
     }));
 
     base_layers.push(new ol.layer.Tile({
+        title: "ESRI Topography",
+        source: new ol.source.XYZ({
+            attributions: 'Tiles © <a href="https://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer">ArcGIS</a>',
+            url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
+        }),
+        visible: false,
+        type: 'base',
+    }));
+
+    base_layers.push(new ol.layer.Tile({
         title: "ESRI Satellite",
         source: new ol.source.XYZ({
-            url:"http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+            url: "http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+            attributions: 'Tiles © <a href="https://services.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer">ArcGIS</a>',
         }),
         visible: false,
         type: 'base'
@@ -174,6 +185,7 @@ function init(){
         cellSize: 0.02,
         name: "PSM3 2 km",
         maxResolution: 306,
+        width: 1,
     });
     overlays.push(grid_layer_2km);
 
@@ -185,6 +197,7 @@ function init(){
         cellSize: 0.04,
         name: "PSM3 4 km",
         maxResolution: 306,
+        width: 3,
     });
     overlays.push(grid_layer_4km);
 
@@ -192,6 +205,12 @@ function init(){
     var vectorLayer = new ol.layer.Vector({
         title: "Active Pixel",
         source: vectorSource,
+        style: new ol.style.Style({
+            stroke: new ol.style.Stroke({
+                width: 3,
+                color: "#00AAFF",
+            })
+        }),
     });
     overlays.push(vectorLayer);
 
