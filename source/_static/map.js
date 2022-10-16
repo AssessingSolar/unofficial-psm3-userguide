@@ -1,33 +1,3 @@
-
-<script src="https://cdn.jsdelivr.net/npm/ol@v7.1.0/dist/ol.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.1.0/ol.css">
-
-<script src="https://unpkg.com/ol-layerswitcher@4.1.0"></script>
-<link rel="stylesheet" href="https://unpkg.com/ol-layerswitcher@4.1.0/dist/ol-layerswitcher.css" />
-
-<style>
-.ol-mouse-position {
-  background-color: #ffffff;
-  border: 1px solid black;
-}
-
-.custom-infobox {
-  top: 65px;
-  left: .5em;
-  background-color: #ffffff;
-  border: 1px solid black;
-  padding: 10px;
-}
-
-.infobox-entry {
-  margin:0;
-}
-</style>
-
-<div id="map" style="height: 580px;"></div>
-
-<script>
-
 class CustomInfoBox extends ol.control.Control {
 
   constructor(opt_options) {
@@ -289,4 +259,3 @@ function init(){
 $(window).on('load', function() {
     init();
 });
-</script>

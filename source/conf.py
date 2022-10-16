@@ -26,3 +26,4 @@ nbsphinx_requirejs_path = ''  # disable requirejs; already loaded by theme
 
 html_theme = 'pydata_sphinx_theme'
 html_static_path = ['_static']
+html_title = "Unofficial PSM3 User's Guide"
