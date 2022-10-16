@@ -88,9 +88,17 @@ function make_grid_layer(opts){
 }
 
 function snapToCenter(lat, lon, resolution){
+    var latStep, lonStep;
+    if(resolution == 0.02){
+        latStep = 0;
+        lonStep = 0.01;
+    } else if(resolution == 0.04){
+        latStep = -0.01;
+        lonStep = 0.02;
+    }
     var invRes = Math.round(1/resolution);
-    var latRounded = Math.round(lat * invRes) / invRes;
-    var lonRounded = Math.round(lon * invRes) / invRes;
+    var latRounded = Math.round((lat+latStep) * invRes) / invRes - latStep;
+    var lonRounded = Math.round((lon+lonStep) * invRes) / invRes - lonStep;
     return {
         lat: latRounded,
         lon: lonRounded,
@@ -161,19 +169,18 @@ function init(){
     var grid_layer_2km = make_grid_layer({
         minlon: -180,
         maxlon: -22.5,
-        minlat: -21,
+        minlat: -21.01,
         maxlat: 60,
         cellSize: 0.02,
         name: "PSM3 2 km",
         maxResolution: 306,
-        color: "#ff0000",
     });
     overlays.push(grid_layer_2km);
 
     var grid_layer_4km = make_grid_layer({
         minlon: -180,
         maxlon: -22.5,
-        minlat: -21,
+        minlat: -21.01,
         maxlat: 60,
         cellSize: 0.04,
         name: "PSM3 4 km",
