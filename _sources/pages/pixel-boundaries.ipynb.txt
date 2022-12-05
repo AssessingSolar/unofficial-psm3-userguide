@@ -78,8 +78,8 @@
    "outputs": [],
    "source": [
     "kwargs = {\n",
-    "    'api_key': 'ESntbO4ouJNusYXtOovrJzCES44o11bKGq6TqGap',\n",
-    "    'email': 'kevinanderso@gmail.com',\n",
+    "    'api_key': 'DEMO_KEY',\n",
+    "    'email': 'assessingsolar@gmail.com',\n",
     "    'attributes': ['ghi'],\n",
     "    'map_variables': True,\n",
     "    'leap_day': True,\n",

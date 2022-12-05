@@ -47,7 +47,7 @@
     "\n",
     "# Be aware that `get_psm3()` uses a different endpoint for interval=5 than it does for interval=30 or 60\n",
     "\n",
-    "kwargs = dict(latitude=lat, longitude=lon, api_key='DEMO_KEY', email='kevin.anderson@nrel.gov',\n",
+    "kwargs = dict(latitude=lat, longitude=lon, api_key='DEMO_KEY', email='assessingsolar@gmail.com',\n",
     "              names='2018', map_variables=False, leap_day=True)"
    ]
   },

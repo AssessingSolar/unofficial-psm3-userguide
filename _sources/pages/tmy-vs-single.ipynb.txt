@@ -38,7 +38,7 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "kwargs = dict(latitude=40, longitude=-80, api_key='DEMO_KEY', email='kevin.anderson@nrel.gov',\n",
+    "kwargs = dict(latitude=40, longitude=-80, api_key='DEMO_KEY', email='assessingsolar@gmail.com',\n",
     "              map_variables=True, leap_day=True)\n",
     "real_tmy = pvlib.iotools.get_psm3(names='tmy-2020', **kwargs)[0].drop(columns=['Year', 'Month', 'Day', 'Hour', 'Minute'])"
    ]
