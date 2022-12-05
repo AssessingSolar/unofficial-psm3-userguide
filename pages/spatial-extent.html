@@ -1,0 +1,928 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Spatial Extent &#8212; Unofficial PSM3 User&#39;s Guide</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Interactive Pixel Map" href="map.html" />
+    <link rel="prev" title="Solar Position" href="solar-position.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Unofficial PSM3 User's Guide</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Contents:
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="cloudy-disc.html">
+   Cloudy-skies: DISC
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="data-aggregation.html">
+   Data Aggregation: 5 to 30/60 minute
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="hsds-auxiliary.html">
+   HSDS auxiliary variables
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="pixel-boundaries.html">
+   Pixel Boundaries
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="rate-limits.html">
+   API Rate Limits
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="rollover.html">
+   End-of-year “roll-over”
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="solar-position.html">
+   Solar Position
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Spatial Extent
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="map.html">
+   Interactive Pixel Map
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="tmy-vs-single.html">
+   TMY versus Single-Year
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/pages/spatial-extent.ipynb.txt"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Spatial Extent</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt .copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+.jp-RenderedHTMLCommon table,
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+.jp-RenderedHTMLCommon thead,
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+.jp-RenderedHTMLCommon tr,
+.jp-RenderedHTMLCommon th,
+.jp-RenderedHTMLCommon td,
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+.jp-RenderedHTMLCommon th,
+div.rendered_html th {
+  font-weight: bold;
+}
+.jp-RenderedHTMLCommon tbody tr:nth-child(odd),
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+.jp-RenderedHTMLCommon tbody tr:hover,
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<section id="Spatial-Extent">
+<h1>Spatial Extent<a class="headerlink" href="#Spatial-Extent" title="Permalink to this headline">#</a></h1>
+<p>Although other NSRDB datasets cover other parts of the globe, the primary PSM3 dataset, being derived in part from imagery from the GOES <a class="reference external" href="https://en.wikipedia.org/wiki/GOES-16">East</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/GOES-17">West</a> satellites in geostationary orbit over North America, covers only a large portion of the western hemisphere. Furthermore, PSM3 data are only available on or near land within that footprint.</p>
+<p>This notebook documents that spatial availability. To do so using the HTTP API would be prohibitively intensive, so we’ll use the HSDS service instead.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import h5pyd
+import matplotlib.pyplot as plt
+import cartopy
+import cartopy.crs as ccrs
+import numpy as np
+import pandas as pd
+
+f = h5pyd.File(&quot;/nrel/nsrdb/v3/nsrdb_2020.h5&quot;, &#39;r&#39;)  # requires a ~/.hscfg file
+print(f.attrs[&#39;version&#39;])
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+3.2.0
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>%time meta = pd.DataFrame(f[&#39;meta&#39;][...])
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+CPU times: user 2.21 s, sys: 837 ms, total: 3.05 s
+Wall time: 58 s
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>latitude</th>
+      <th>longitude</th>
+      <th>elevation</th>
+      <th>timezone</th>
+      <th>country</th>
+      <th>state</th>
+      <th>county</th>
+      <th>urban</th>
+      <th>population</th>
+      <th>landcover</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-19.990000</td>
+      <td>-175.259995</td>
+      <td>0.0</td>
+      <td>13</td>
+      <td>b'None'</td>
+      <td>b'None'</td>
+      <td>b'None'</td>
+      <td>b'None'</td>
+      <td>-9999</td>
+      <td>210</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-19.990000</td>
+      <td>-175.220001</td>
+      <td>0.0</td>
+      <td>13</td>
+      <td>b'None'</td>
+      <td>b'None'</td>
+      <td>b'None'</td>
+      <td>b'None'</td>
+      <td>-9999</td>
+      <td>210</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-19.990000</td>
+      <td>-175.179993</td>
+      <td>0.0</td>
+      <td>13</td>
+      <td>b'None'</td>
+      <td>b'None'</td>
+      <td>b'None'</td>
+      <td>b'None'</td>
+      <td>-9999</td>
+      <td>210</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-19.990000</td>
+      <td>-175.139999</td>
+      <td>0.0</td>
+      <td>13</td>
+      <td>b'None'</td>
+      <td>b'None'</td>
+      <td>b'None'</td>
+      <td>b'None'</td>
+      <td>-9999</td>
+      <td>210</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-19.990000</td>
+      <td>-175.100006</td>
+      <td>0.0</td>
+      <td>13</td>
+      <td>b'None'</td>
+      <td>b'None'</td>
+      <td>b'None'</td>
+      <td>b'None'</td>
+      <td>-9999</td>
+      <td>210</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2018387</th>
+      <td>51.810001</td>
+      <td>179.860001</td>
+      <td>0.0</td>
+      <td>-10</td>
+      <td>b'None'</td>
+      <td>b'None'</td>
+      <td>b'None'</td>
+      <td>b'None'</td>
+      <td>-9999</td>
+      <td>210</td>
+    </tr>
+    <tr>
+      <th>2018388</th>
+      <td>51.849998</td>
+      <td>179.860001</td>
+      <td>0.0</td>
+      <td>-10</td>
+      <td>b'None'</td>
+      <td>b'None'</td>
+      <td>b'None'</td>
+      <td>b'None'</td>
+      <td>-9999</td>
+      <td>210</td>
+    </tr>
+    <tr>
+      <th>2018389</th>
+      <td>51.689999</td>
+      <td>179.860001</td>
+      <td>0.0</td>
+      <td>-10</td>
+      <td>b'None'</td>
+      <td>b'None'</td>
+      <td>b'None'</td>
+      <td>b'None'</td>
+      <td>-9999</td>
+      <td>210</td>
+    </tr>
+    <tr>
+      <th>2018390</th>
+      <td>51.770000</td>
+      <td>179.860001</td>
+      <td>0.0</td>
+      <td>-10</td>
+      <td>b'None'</td>
+      <td>b'None'</td>
+      <td>b'None'</td>
+      <td>b'None'</td>
+      <td>-9999</td>
+      <td>210</td>
+    </tr>
+    <tr>
+      <th>2018391</th>
+      <td>51.689999</td>
+      <td>179.899994</td>
+      <td>0.0</td>
+      <td>-10</td>
+      <td>b'None'</td>
+      <td>b'None'</td>
+      <td>b'None'</td>
+      <td>b'None'</td>
+      <td>-9999</td>
+      <td>210</td>
+    </tr>
+  </tbody>
+</table>
+<p>2018392 rows × 10 columns</p>
+</div></div>
+</div>
+<p>First, let’s map what parts of the planet have data available:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig = plt.figure()
+ax = fig.add_subplot(1, 1, 1, projection=ccrs.PlateCarree())
+ax.set_global()
+ax.coastlines()
+ax.scatter(meta[&#39;longitude&#39;], meta[&#39;latitude&#39;], c=&#39;r&#39;, s=1, transform=ccrs.PlateCarree())
+ax.xaxis.set_visible(True)
+ax.yaxis.set_visible(True)
+fig.tight_layout()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/pages_spatial-extent_4_0.png" src="../_images/pages_spatial-extent_4_0.png" />
+</div>
+</div>
+<p>So there is data for much of the continental Americas as well as various islands in the Atlantic and Pacific. Note also the tiny spec of coverage in the Aleutian Islands at the far right. Ignoring that, the coverage spans <span class="math notranslate nohighlight">\(-21°\)</span> to <span class="math notranslate nohighlight">\(+60°\)</span> in latitude and <span class="math notranslate nohighlight">\(-180°\)</span> to <span class="math notranslate nohighlight">\(-22.5°\)</span> in longitude.</p>
+<p>Zooming in, we see that the data coverage extends out from the coastline a ways – roughly 5 pixels or so:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># bounding boxes (lon_min, lon_max, lat_min, lat_max)
+extents = {
+    &#39;Galápagos Islands&#39;: ([-92.5, -88.5, -2, 2], 0.2),
+    &#39;San Francisco Bay&#39;: ([-123, -121.5, 37, 38.5], 0.5),
+    &#39;Chesapeake Bay&#39;: ([-77.5, -74.5, 36.75, 39.75], 0.3),
+    &#39;Long Island&#39;: ([-74.5, -71.5, 39.5, 42.5], 0.3),
+    &#39;Puerto Rico / Virgin Islands&#39;: ([-67.5, -64, 16.5, 20], 0.25),
+    &#39;Gulf of Venezuela / Lake Maracaibo&#39;: ([-73, -69, 9, 13], 0.2),
+    &#39;Newfoundland&#39;: ([-60, -52, 45, 53], 0.05),
+    &#39;Hawaiian Islands&#39;: ([-160.5, -154.5, 17.5, 23.5], 0.1),
+    &#39;Haida Gwaii&#39;: ([-133.5, -130.5, 51.75, 54.75], 0.3),
+}
+
+fig = plt.figure(figsize=(9, 8))
+for i, (label, (extent, alpha)) in enumerate(extents.items()):
+    ax = fig.add_subplot(3, 3, 1+i, projection=ccrs.PlateCarree())
+    ax.set_extent(extent, crs=ccrs.PlateCarree())
+    ax.add_feature(cartopy.feature.OCEAN, zorder=0)
+    ax.add_feature(cartopy.feature.LAND, zorder=0, edgecolor=&#39;black&#39;)
+    ax.scatter(meta[&#39;longitude&#39;], meta[&#39;latitude&#39;], c=&#39;r&#39;, s=1, transform=ccrs.PlateCarree(), alpha=alpha)
+    ax.xaxis.set_visible(True)
+    ax.yaxis.set_visible(True)
+    ax.set_title(label)
+
+fig.tight_layout()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/pages_spatial-extent_6_0.png" src="../_images/pages_spatial-extent_6_0.png" />
+</div>
+</div>
+<p>Interestingly, inland bodies of water have full coverage:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>extents = {
+    &#39;Great Lakes Region&#39;: ([-90, -80, 40, 50], 0.01),
+    &#39;Salton Sea&#39;: ([-116.25, -115.5, 33, 33.75], 0.5),
+    &#39;Great Salt Lake&#39;: ([-113.25, -111.75, 40.5, 42], 0.3),
+    &#39;Flathead Lake&#39;: ([-114.4, -113.8, 47.6, 48.2], 0.3),
+    &#39;Lake Chapala&#39;: ([-103.5, -102.6, 19.8, 20.7], 0.3),
+    &#39;Lake Titicaca&#39;: ([-70.4, -68.4, -17, -15], 0.2),
+}
+
+fig = plt.figure(figsize=(9, 5))
+for i, (label, (extent, alpha)) in enumerate(extents.items()):
+    ax = fig.add_subplot(2, 3, 1+i, projection=ccrs.PlateCarree())
+    ax.set_extent(extent, crs=ccrs.PlateCarree())
+    ax.add_feature(cartopy.feature.LAND)
+    ax.add_feature(cartopy.feature.LAKES)
+    ax.scatter(meta[&#39;longitude&#39;], meta[&#39;latitude&#39;], c=&#39;r&#39;, s=1, transform=ccrs.PlateCarree(), alpha=alpha)
+    ax.xaxis.set_visible(True)
+    ax.yaxis.set_visible(True)
+    ax.set_title(label)
+
+fig.tight_layout()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/pages_spatial-extent_8_0.png" src="../_images/pages_spatial-extent_8_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>%load_ext watermark
+%watermark --iversions -u -d -t
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Last updated: 2022-09-21 18:07:33
+
+</pre></div></div>
+</div>
+</section>
+
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="solar-position.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Solar Position</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="map.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Interactive Pixel Map</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Kevin Anderson<br/>
+  
+      &copy; Copyright 2022, Kevin Anderson.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
