@@ -7,8 +7,8 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "The Unofficial PSM3 User's Guide"
-copyright = '2022, Kevin Anderson'
-author = 'Kevin Anderson'
+copyright = '2022'
+author = 'The Assessing Solar Community'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
