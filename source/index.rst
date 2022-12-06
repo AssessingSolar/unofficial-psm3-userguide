@@ -34,6 +34,7 @@ This project uses many open-source software packages, including:
 - and many others
 
 .. toctree::
+   :hidden:
    :maxdepth: 2
    :caption: Contents
 
