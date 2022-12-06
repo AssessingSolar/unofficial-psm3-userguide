@@ -33,7 +33,6 @@ This project uses many open-source software packages, including:
 - `python <https://www.python.org>`_: the foundation of all of the above
 - and many others
 
-
 .. toctree::
    :maxdepth: 2
    :caption: Contents
