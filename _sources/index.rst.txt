@@ -33,10 +33,10 @@ This project uses many open-source software packages, including:
 - `python <https://www.python.org>`_: the foundation of all of the above
 - and many others
 
-
 .. toctree::
+   :hidden:
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Contents
 
    pages/cloudy-disc
    pages/data-aggregation
@@ -48,11 +48,3 @@ This project uses many open-source software packages, including:
    pages/spatial-extent
    pages/map
    pages/tmy-vs-single
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
