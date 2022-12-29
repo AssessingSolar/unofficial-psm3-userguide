@@ -545,9 +545,9 @@ Interval 2:                            --------------------
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pvlib
-import matplotlib.pyplot as plt
-import pandas as pd
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pvlib</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 </pre></div>
 </div>
 </div>
@@ -555,12 +555,12 @@ import pandas as pd
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>lat, lon = 40.005, -80.005
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lat</span><span class="p">,</span> <span class="n">lon</span> <span class="o">=</span> <span class="mf">40.005</span><span class="p">,</span> <span class="o">-</span><span class="mf">80.005</span>
 
-# Be aware that `get_psm3()` uses a different endpoint for interval=5 than it does for interval=30 or 60
+<span class="c1"># Be aware that `get_psm3()` uses a different endpoint for interval=5 than it does for interval=30 or 60</span>
 
-kwargs = dict(latitude=lat, longitude=lon, api_key=&#39;DEMO_KEY&#39;, email=&#39;assessingsolar@gmail.com&#39;,
-              names=&#39;2018&#39;, map_variables=False, leap_day=True)
+<span class="n">kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">latitude</span><span class="o">=</span><span class="n">lat</span><span class="p">,</span> <span class="n">longitude</span><span class="o">=</span><span class="n">lon</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s1">&#39;DEMO_KEY&#39;</span><span class="p">,</span> <span class="n">email</span><span class="o">=</span><span class="s1">&#39;assessingsolar@gmail.com&#39;</span><span class="p">,</span>
+              <span class="n">names</span><span class="o">=</span><span class="s1">&#39;2018&#39;</span><span class="p">,</span> <span class="n">map_variables</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">leap_day</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -568,8 +568,8 @@ kwargs = dict(latitude=lat, longitude=lon, api_key=&#39;DEMO_KEY&#39;, email=&#3
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_4km30, meta = pvlib.iotools.get_psm3(interval=30, **kwargs)
-print(&#39;4 km pixel coords:&#39;, meta[&#39;Latitude&#39;], meta[&#39;Longitude&#39;])  # 40.01 -80.02
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_4km30</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="n">pvlib</span><span class="o">.</span><span class="n">iotools</span><span class="o">.</span><span class="n">get_psm3</span><span class="p">(</span><span class="n">interval</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;4 km pixel coords:&#39;</span><span class="p">,</span> <span class="n">meta</span><span class="p">[</span><span class="s1">&#39;Latitude&#39;</span><span class="p">],</span> <span class="n">meta</span><span class="p">[</span><span class="s1">&#39;Longitude&#39;</span><span class="p">])</span>  <span class="c1"># 40.01 -80.02</span>
 </pre></div>
 </div>
 </div>
@@ -585,8 +585,8 @@ print(&#39;4 km pixel coords:&#39;, meta[&#39;Latitude&#39;], meta[&#39;Longitud
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_2km1, meta = pvlib.iotools.get_psm3(interval=5, **kwargs)
-print(&#39;2 km pixel coords:&#39;, meta[&#39;Latitude&#39;], meta[&#39;Longitude&#39;])  # 40.00 -80.01
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_2km1</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="n">pvlib</span><span class="o">.</span><span class="n">iotools</span><span class="o">.</span><span class="n">get_psm3</span><span class="p">(</span><span class="n">interval</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;2 km pixel coords:&#39;</span><span class="p">,</span> <span class="n">meta</span><span class="p">[</span><span class="s1">&#39;Latitude&#39;</span><span class="p">],</span> <span class="n">meta</span><span class="p">[</span><span class="s1">&#39;Longitude&#39;</span><span class="p">])</span>  <span class="c1"># 40.00 -80.01</span>
 </pre></div>
 </div>
 </div>
@@ -603,10 +603,10 @@ print(&#39;2 km pixel coords:&#39;, meta[&#39;Latitude&#39;], meta[&#39;Longitud
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>kwargs[&#39;latitude&#39;] = lat
-kwargs[&#39;longitude&#39;] = lon - 0.02  # one pixel west
-df_2km2, meta = pvlib.iotools.get_psm3(interval=5, **kwargs)
-print(&#39;2 km pixel coords:&#39;, meta[&#39;Latitude&#39;], meta[&#39;Longitude&#39;])  # 40.00 -80.03
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lat</span>
+<span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lon</span> <span class="o">-</span> <span class="mf">0.02</span>  <span class="c1"># one pixel west</span>
+<span class="n">df_2km2</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="n">pvlib</span><span class="o">.</span><span class="n">iotools</span><span class="o">.</span><span class="n">get_psm3</span><span class="p">(</span><span class="n">interval</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;2 km pixel coords:&#39;</span><span class="p">,</span> <span class="n">meta</span><span class="p">[</span><span class="s1">&#39;Latitude&#39;</span><span class="p">],</span> <span class="n">meta</span><span class="p">[</span><span class="s1">&#39;Longitude&#39;</span><span class="p">])</span>  <span class="c1"># 40.00 -80.03</span>
 </pre></div>
 </div>
 </div>
@@ -622,10 +622,10 @@ print(&#39;2 km pixel coords:&#39;, meta[&#39;Latitude&#39;], meta[&#39;Longitud
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>kwargs[&#39;latitude&#39;] = lat + 0.02  # one pixel north
-kwargs[&#39;longitude&#39;] = lon
-df_2km3, meta = pvlib.iotools.get_psm3(interval=5, **kwargs)
-print(&#39;2 km pixel coords:&#39;, meta[&#39;Latitude&#39;], meta[&#39;Longitude&#39;])  # 40.02 -80.01
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lat</span> <span class="o">+</span> <span class="mf">0.02</span>  <span class="c1"># one pixel north</span>
+<span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lon</span>
+<span class="n">df_2km3</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="n">pvlib</span><span class="o">.</span><span class="n">iotools</span><span class="o">.</span><span class="n">get_psm3</span><span class="p">(</span><span class="n">interval</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;2 km pixel coords:&#39;</span><span class="p">,</span> <span class="n">meta</span><span class="p">[</span><span class="s1">&#39;Latitude&#39;</span><span class="p">],</span> <span class="n">meta</span><span class="p">[</span><span class="s1">&#39;Longitude&#39;</span><span class="p">])</span>  <span class="c1"># 40.02 -80.01</span>
 </pre></div>
 </div>
 </div>
@@ -641,10 +641,10 @@ print(&#39;2 km pixel coords:&#39;, meta[&#39;Latitude&#39;], meta[&#39;Longitud
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>kwargs[&#39;latitude&#39;] = lat + 0.02  # one pixel north-west
-kwargs[&#39;longitude&#39;] = lon - 0.02
-df_2km4, meta = pvlib.iotools.get_psm3(interval=5, **kwargs)
-print(&#39;2 km pixel coords:&#39;, meta[&#39;Latitude&#39;], meta[&#39;Longitude&#39;])  # 40.02 -80.03
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lat</span> <span class="o">+</span> <span class="mf">0.02</span>  <span class="c1"># one pixel north-west</span>
+<span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lon</span> <span class="o">-</span> <span class="mf">0.02</span>
+<span class="n">df_2km4</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="n">pvlib</span><span class="o">.</span><span class="n">iotools</span><span class="o">.</span><span class="n">get_psm3</span><span class="p">(</span><span class="n">interval</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;2 km pixel coords:&#39;</span><span class="p">,</span> <span class="n">meta</span><span class="p">[</span><span class="s1">&#39;Latitude&#39;</span><span class="p">],</span> <span class="n">meta</span><span class="p">[</span><span class="s1">&#39;Longitude&#39;</span><span class="p">])</span>  <span class="c1"># 40.02 -80.03</span>
 </pre></div>
 </div>
 </div>
@@ -661,12 +661,12 @@ print(&#39;2 km pixel coords:&#39;, meta[&#39;Latitude&#39;], meta[&#39;Longitud
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def aggregate30(x1, x2, x3, x4):
-    avg_5min = pd.concat([x1, x2, x3, x4], axis=1).mean(axis=1)
-    resampler = avg_5min.shift(3).resample(&#39;30T&#39;)
-    sum_30min_6samples = resampler.sum()
-    avg_30min_7samples = (sum_30min_6samples + resampler.first().shift(-1)) / 7
-    return avg_30min_7samples
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">aggregate30</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">x3</span><span class="p">,</span> <span class="n">x4</span><span class="p">):</span>
+    <span class="n">avg_5min</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">x3</span><span class="p">,</span> <span class="n">x4</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">resampler</span> <span class="o">=</span> <span class="n">avg_5min</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;30T&#39;</span><span class="p">)</span>
+    <span class="n">sum_30min_6samples</span> <span class="o">=</span> <span class="n">resampler</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">avg_30min_7samples</span> <span class="o">=</span> <span class="p">(</span><span class="n">sum_30min_6samples</span> <span class="o">+</span> <span class="n">resampler</span><span class="o">.</span><span class="n">first</span><span class="p">()</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="mi">7</span>
+    <span class="k">return</span> <span class="n">avg_30min_7samples</span>
 </pre></div>
 </div>
 </div>
@@ -674,20 +674,20 @@ print(&#39;2 km pixel coords:&#39;, meta[&#39;Latitude&#39;], meta[&#39;Longitud
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>columns = [&#39;GHI&#39;, &#39;DNI&#39;, &#39;DHI&#39;]
-fig, axes = plt.subplots(2, len(columns), figsize=(9, 6))
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;GHI&#39;</span><span class="p">,</span> <span class="s1">&#39;DNI&#39;</span><span class="p">,</span> <span class="s1">&#39;DHI&#39;</span><span class="p">]</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">columns</span><span class="p">),</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 
-for i, column in enumerate(columns):
-    x = df_4km30[column]
-    y = aggregate30(df_2km1[column], df_2km2[column], df_2km3[column], df_2km4[column])
-    axes[0, i].scatter(x, y, s=1)
-    axes[0, i].set_xlabel(f&#39;PSM3 {column} [W/m2]&#39;)
-    axes[0, i].set_ylabel(f&#39;Calculated {column} [W/m2]&#39;)
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">column</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">columns</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">df_4km30</span><span class="p">[</span><span class="n">column</span><span class="p">]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">aggregate30</span><span class="p">(</span><span class="n">df_2km1</span><span class="p">[</span><span class="n">column</span><span class="p">],</span> <span class="n">df_2km2</span><span class="p">[</span><span class="n">column</span><span class="p">],</span> <span class="n">df_2km3</span><span class="p">[</span><span class="n">column</span><span class="p">],</span> <span class="n">df_2km4</span><span class="p">[</span><span class="n">column</span><span class="p">])</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;PSM3 </span><span class="si">{</span><span class="n">column</span><span class="si">}</span><span class="s1"> [W/m2]&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Calculated </span><span class="si">{</span><span class="n">column</span><span class="si">}</span><span class="s1"> [W/m2]&#39;</span><span class="p">)</span>
 
-    axes[1, i].scatter(x, x - y, s=1)
-    axes[1, i].set_ylabel(f&#39;{column} Difference (PSM3 $-$ Calculated) [W/m2]&#39;)
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span> <span class="o">-</span> <span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">column</span><span class="si">}</span><span class="s1"> Difference (PSM3 $-$ Calculated) [W/m2]&#39;</span><span class="p">)</span>
 
-fig.tight_layout()
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -704,8 +704,8 @@ fig.tight_layout()
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_4km60, meta = pvlib.iotools.get_psm3(interval=60, **kwargs)
-print(&#39;4km cell coords:&#39;, meta[&#39;Latitude&#39;], meta[&#39;Longitude&#39;])  # 40.01 -80.02
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_4km60</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="n">pvlib</span><span class="o">.</span><span class="n">iotools</span><span class="o">.</span><span class="n">get_psm3</span><span class="p">(</span><span class="n">interval</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;4km cell coords:&#39;</span><span class="p">,</span> <span class="n">meta</span><span class="p">[</span><span class="s1">&#39;Latitude&#39;</span><span class="p">],</span> <span class="n">meta</span><span class="p">[</span><span class="s1">&#39;Longitude&#39;</span><span class="p">])</span>  <span class="c1"># 40.01 -80.02</span>
 </pre></div>
 </div>
 </div>
@@ -721,20 +721,20 @@ print(&#39;4km cell coords:&#39;, meta[&#39;Latitude&#39;], meta[&#39;Longitude&
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>columns = [&#39;GHI&#39;, &#39;DNI&#39;, &#39;DHI&#39;]
-fig, axes = plt.subplots(2, len(columns), figsize=(9, 6))
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;GHI&#39;</span><span class="p">,</span> <span class="s1">&#39;DNI&#39;</span><span class="p">,</span> <span class="s1">&#39;DHI&#39;</span><span class="p">]</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">columns</span><span class="p">),</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 
-for i, column in enumerate(columns):
-    x = df_4km60[column]
-    y = df_4km30[column][1::2]  # take every other 30-minute value
-    axes[0, i].scatter(x, y, s=1)
-    axes[0, i].set_xlabel(f&#39;PSM3 {column} [W/m2]&#39;)
-    axes[0, i].set_ylabel(f&#39;Calculated {column} [W/m2]&#39;)
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">column</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">columns</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">df_4km60</span><span class="p">[</span><span class="n">column</span><span class="p">]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">df_4km30</span><span class="p">[</span><span class="n">column</span><span class="p">][</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>  <span class="c1"># take every other 30-minute value</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;PSM3 </span><span class="si">{</span><span class="n">column</span><span class="si">}</span><span class="s1"> [W/m2]&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Calculated </span><span class="si">{</span><span class="n">column</span><span class="si">}</span><span class="s1"> [W/m2]&#39;</span><span class="p">)</span>
 
-    axes[1, i].scatter(x, x - y, s=1)
-    axes[1, i].set_ylabel(f&#39;{column} Difference (PSM3 60 $-$ PSM3 30) [W/m2]&#39;)
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span> <span class="o">-</span> <span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">column</span><span class="si">}</span><span class="s1"> Difference (PSM3 60 $-$ PSM3 30) [W/m2]&#39;</span><span class="p">)</span>
 
-fig.tight_layout()
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -749,8 +749,8 @@ fig.tight_layout()
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>%load_ext watermark
-%watermark --iversions -u -d -t
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> watermark
+<span class="o">%</span><span class="k">watermark</span> --iversions -u -d -t
 </pre></div>
 </div>
 </div>

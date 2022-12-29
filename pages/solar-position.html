@@ -542,10 +542,10 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[156]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pvlib
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pvlib</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 </pre></div>
 </div>
 </div>
@@ -553,13 +553,13 @@ import matplotlib.pyplot as plt
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[87]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># fetch an example PSM3 dataset
-df, meta = pvlib.iotools.get_psm3(40.00, -80.01,
-                                  api_key=&#39;DEMO_KEY&#39;, email=&#39;assessingsolar@gmail.com&#39;,
-                                  names=2020, interval=5, map_variables=True, leap_day=True,
-                                  attributes=[&#39;solar_zenith_angle&#39;, &#39;air_temperature&#39;, &#39;surface_pressure&#39;])
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># fetch an example PSM3 dataset</span>
+<span class="n">df</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="n">pvlib</span><span class="o">.</span><span class="n">iotools</span><span class="o">.</span><span class="n">get_psm3</span><span class="p">(</span><span class="mf">40.00</span><span class="p">,</span> <span class="o">-</span><span class="mf">80.01</span><span class="p">,</span>
+                                  <span class="n">api_key</span><span class="o">=</span><span class="s1">&#39;DEMO_KEY&#39;</span><span class="p">,</span> <span class="n">email</span><span class="o">=</span><span class="s1">&#39;assessingsolar@gmail.com&#39;</span><span class="p">,</span>
+                                  <span class="n">names</span><span class="o">=</span><span class="mi">2020</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">map_variables</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">leap_day</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                  <span class="n">attributes</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;solar_zenith_angle&#39;</span><span class="p">,</span> <span class="s1">&#39;air_temperature&#39;</span><span class="p">,</span> <span class="s1">&#39;surface_pressure&#39;</span><span class="p">])</span>
 
-df[&#39;pressure&#39;] = df[&#39;pressure&#39;] * 100  # mbar to Pa
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;pressure&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;pressure&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span>  <span class="c1"># mbar to Pa</span>
 </pre></div>
 </div>
 </div>
@@ -568,8 +568,8 @@ df[&#39;pressure&#39;] = df[&#39;pressure&#39;] * 100  # mbar to Pa
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[141]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.loc[&#39;2020-01-01 07:15&#39;:&#39;2020-01-01 08:15&#39;, &#39;solar_zenith&#39;].plot()
-plt.ylabel(&#39;PSM3 Solar Zenith [degrees]&#39;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;2020-01-01 07:15&#39;</span><span class="p">:</span><span class="s1">&#39;2020-01-01 08:15&#39;</span><span class="p">,</span> <span class="s1">&#39;solar_zenith&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;PSM3 Solar Zenith [degrees]&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -594,10 +594,10 @@ Text(0, 0.5, &#39;PSM3 Solar Zenith [degrees]&#39;)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[116]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>kwargs = dict(time=df.index, latitude=40.00, longitude=-80.01, altitude=meta[&#39;altitude&#39;])
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">latitude</span><span class="o">=</span><span class="mf">40.00</span><span class="p">,</span> <span class="n">longitude</span><span class="o">=-</span><span class="mf">80.01</span><span class="p">,</span> <span class="n">altitude</span><span class="o">=</span><span class="n">meta</span><span class="p">[</span><span class="s1">&#39;altitude&#39;</span><span class="p">])</span>
 
-sp1 = pvlib.solarposition.spa_python(**kwargs, temperature=df[&#39;temp_air&#39;].mean(), pressure=df[&#39;pressure&#39;].mean())
-sp2 = pvlib.solarposition.spa_python(**kwargs, temperature=df[&#39;temp_air&#39;], pressure=df[&#39;pressure&#39;])
+<span class="n">sp1</span> <span class="o">=</span> <span class="n">pvlib</span><span class="o">.</span><span class="n">solarposition</span><span class="o">.</span><span class="n">spa_python</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;temp_air&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">pressure</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;pressure&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+<span class="n">sp2</span> <span class="o">=</span> <span class="n">pvlib</span><span class="o">.</span><span class="n">solarposition</span><span class="o">.</span><span class="n">spa_python</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;temp_air&#39;</span><span class="p">],</span> <span class="n">pressure</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;pressure&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -605,16 +605,16 @@ sp2 = pvlib.solarposition.spa_python(**kwargs, temperature=df[&#39;temp_air&#39;
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[153]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for case, sp in [(&#39;annual average temperature/pressure&#39;, sp1), (&#39;time series temperature/pressure&#39;, sp2)]:
-    aux = pd.DataFrame({&#39;psm3&#39;: df[&#39;solar_zenith&#39;], &#39;spa&#39;: sp[&#39;apparent_zenith&#39;]})
-    aux[&#39;diff&#39;] = aux[&#39;psm3&#39;] - aux[&#39;spa&#39;]
-    aux[&#39;diff&#39;].plot(label=case)
-    print(case, &#39;- 1st and 99th percentiles:&#39;, aux[&#39;diff&#39;].quantile([0.01, 0.99]).values)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">case</span><span class="p">,</span> <span class="n">sp</span> <span class="ow">in</span> <span class="p">[(</span><span class="s1">&#39;annual average temperature/pressure&#39;</span><span class="p">,</span> <span class="n">sp1</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;time series temperature/pressure&#39;</span><span class="p">,</span> <span class="n">sp2</span><span class="p">)]:</span>
+    <span class="n">aux</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;psm3&#39;</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;solar_zenith&#39;</span><span class="p">],</span> <span class="s1">&#39;spa&#39;</span><span class="p">:</span> <span class="n">sp</span><span class="p">[</span><span class="s1">&#39;apparent_zenith&#39;</span><span class="p">]})</span>
+    <span class="n">aux</span><span class="p">[</span><span class="s1">&#39;diff&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">aux</span><span class="p">[</span><span class="s1">&#39;psm3&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">aux</span><span class="p">[</span><span class="s1">&#39;spa&#39;</span><span class="p">]</span>
+    <span class="n">aux</span><span class="p">[</span><span class="s1">&#39;diff&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">case</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">case</span><span class="p">,</span> <span class="s1">&#39;- 1st and 99th percentiles:&#39;</span><span class="p">,</span> <span class="n">aux</span><span class="p">[</span><span class="s1">&#39;diff&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">([</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.99</span><span class="p">])</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
 
-plt.ylabel(&#39;Solar Zenith Difference (PSM3 $-$ SPA) [degrees]&#39;)
-plt.axhline(+0.005, ls=&#39;--&#39;, c=&#39;k&#39;, label=&#39;precision bounds&#39;)
-plt.legend()
-plt.axhline(-0.005, ls=&#39;--&#39;, c=&#39;k&#39;);
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Solar Zenith Difference (PSM3 $-$ SPA) [degrees]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="o">+</span><span class="mf">0.005</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;precision bounds&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="o">-</span><span class="mf">0.005</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -639,25 +639,25 @@ time series temperature/pressure - 1st and 99th percentiles: [-0.00489857  0.004
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[162]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># mimic the PSM3 &quot;roll-over&quot; effect
-is_rolled = df.index &gt; (df.index[-1] + df.index[-1].utcoffset())
-df_shift = df.copy()
-df_shift.index = np.where(is_rolled, df_shift.index - pd.DateOffset(years=1), df_shift.index)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># mimic the PSM3 &quot;roll-over&quot; effect</span>
+<span class="n">is_rolled</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">utcoffset</span><span class="p">())</span>
+<span class="n">df_shift</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df_shift</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">is_rolled</span><span class="p">,</span> <span class="n">df_shift</span><span class="o">.</span><span class="n">index</span> <span class="o">-</span> <span class="n">pd</span><span class="o">.</span><span class="n">DateOffset</span><span class="p">(</span><span class="n">years</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">df_shift</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
 
-sp3 = pvlib.solarposition.spa_python(df_shift.index, meta[&#39;latitude&#39;], meta[&#39;longitude&#39;], meta[&#39;altitude&#39;],
-                                     pressure=df_shift[&#39;pressure&#39;], temperature=df_shift[&#39;temp_air&#39;])
+<span class="n">sp3</span> <span class="o">=</span> <span class="n">pvlib</span><span class="o">.</span><span class="n">solarposition</span><span class="o">.</span><span class="n">spa_python</span><span class="p">(</span><span class="n">df_shift</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">meta</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">],</span> <span class="n">meta</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">],</span> <span class="n">meta</span><span class="p">[</span><span class="s1">&#39;altitude&#39;</span><span class="p">],</span>
+                                     <span class="n">pressure</span><span class="o">=</span><span class="n">df_shift</span><span class="p">[</span><span class="s1">&#39;pressure&#39;</span><span class="p">],</span> <span class="n">temperature</span><span class="o">=</span><span class="n">df_shift</span><span class="p">[</span><span class="s1">&#39;temp_air&#39;</span><span class="p">])</span>
 
-# finally, re-roll the index back to PSM3&#39;s weird index so we can compare with the API data
-sp3.index = df.index
+<span class="c1"># finally, re-roll the index back to PSM3&#39;s weird index so we can compare with the API data</span>
+<span class="n">sp3</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span>
 
-# Now we see that correcting for the roll-over effect brings the error
-# down to the +/- 0.005 degree precision limit for the entire year:
-difference = pd.DataFrame({
-    &#39;difference without correcting rollover&#39;: sp2[&#39;apparent_zenith&#39;],
-    &#39;difference corrected for rollover&#39;: sp3[&#39;apparent_zenith&#39;],
-}).subtract(df[&#39;solar_zenith&#39;], axis=0)
+<span class="c1"># Now we see that correcting for the roll-over effect brings the error</span>
+<span class="c1"># down to the +/- 0.005 degree precision limit for the entire year:</span>
+<span class="n">difference</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;difference without correcting rollover&#39;</span><span class="p">:</span> <span class="n">sp2</span><span class="p">[</span><span class="s1">&#39;apparent_zenith&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;difference corrected for rollover&#39;</span><span class="p">:</span> <span class="n">sp3</span><span class="p">[</span><span class="s1">&#39;apparent_zenith&#39;</span><span class="p">],</span>
+<span class="p">})</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;solar_zenith&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
-difference.describe().loc[[&#39;min&#39;, &#39;max&#39;]].round(3)
+<span class="n">difference</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s1">&#39;min&#39;</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -708,18 +708,18 @@ difference.describe().loc[[&#39;min&#39;, &#39;max&#39;]].round(3)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[154]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sp3 = pvlib.solarposition.spa_python(df.index, 40.00, -80.018, altitude=meta[&#39;altitude&#39;], temperature=df[&#39;temp_air&#39;], pressure=df[&#39;pressure&#39;])
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sp3</span> <span class="o">=</span> <span class="n">pvlib</span><span class="o">.</span><span class="n">solarposition</span><span class="o">.</span><span class="n">spa_python</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="mf">40.00</span><span class="p">,</span> <span class="o">-</span><span class="mf">80.018</span><span class="p">,</span> <span class="n">altitude</span><span class="o">=</span><span class="n">meta</span><span class="p">[</span><span class="s1">&#39;altitude&#39;</span><span class="p">],</span> <span class="n">temperature</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;temp_air&#39;</span><span class="p">],</span> <span class="n">pressure</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;pressure&#39;</span><span class="p">])</span>
 
-aux = pd.DataFrame({&#39;psm3&#39;: df[&#39;solar_zenith&#39;], &#39;spa&#39;: sp3[&#39;apparent_zenith&#39;]})
-aux[&#39;diff&#39;] = aux[&#39;psm3&#39;] - aux[&#39;spa&#39;]
-aux[&#39;diff&#39;].plot()
-print(&#39;1st and 99th percentiles:&#39;, aux[&#39;diff&#39;].quantile([0.01, 0.99]).values)
+<span class="n">aux</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;psm3&#39;</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;solar_zenith&#39;</span><span class="p">],</span> <span class="s1">&#39;spa&#39;</span><span class="p">:</span> <span class="n">sp3</span><span class="p">[</span><span class="s1">&#39;apparent_zenith&#39;</span><span class="p">]})</span>
+<span class="n">aux</span><span class="p">[</span><span class="s1">&#39;diff&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">aux</span><span class="p">[</span><span class="s1">&#39;psm3&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">aux</span><span class="p">[</span><span class="s1">&#39;spa&#39;</span><span class="p">]</span>
+<span class="n">aux</span><span class="p">[</span><span class="s1">&#39;diff&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;1st and 99th percentiles:&#39;</span><span class="p">,</span> <span class="n">aux</span><span class="p">[</span><span class="s1">&#39;diff&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">([</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.99</span><span class="p">])</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
 
-plt.ylabel(&#39;Solar Zenith Difference (PSM3 $-$ SPA) [degrees]&#39;)
-plt.axhline(+0.005, ls=&#39;--&#39;, c=&#39;k&#39;, label=&#39;precision bounds&#39;)
-plt.legend()
-plt.axhline(-0.005, ls=&#39;--&#39;, c=&#39;k&#39;)
-plt.ylim(-0.05, 0.05)
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Solar Zenith Difference (PSM3 $-$ SPA) [degrees]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="o">+</span><span class="mf">0.005</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;precision bounds&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="o">-</span><span class="mf">0.005</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -751,8 +751,8 @@ plt.ylim(-0.05, 0.05)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[163]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>%load_ext watermark
-%watermark --iversions -u -d -t
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> watermark
+<span class="o">%</span><span class="k">watermark</span> --iversions -u -d -t
 </pre></div>
 </div>
 </div>
