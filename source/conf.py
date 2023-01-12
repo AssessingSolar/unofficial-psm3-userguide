@@ -27,3 +27,8 @@ nbsphinx_requirejs_path = ''  # disable requirejs; already loaded by theme
 html_theme = 'sphinx_book_theme'
 html_static_path = ['_static']
 html_title = "Unofficial PSM3 User's Guide"
+
+html_theme_options = {
+    "repository_url": "https://github.com/AssessingSolar/unofficial-psm3-userguide",
+    "use_repository_button": True,
+}
