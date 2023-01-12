@@ -11,6 +11,12 @@ or NREL.  As such, the information here should not be considered official docume
 Rather, it is a user-developed effort to document and demonstrate aspects of
 the PSM3 dataset and web API that are not necessarily documented anywhere else.
 
+.. warning::
+    This project is still a work in progress.  The current content may be
+    rewritten, reorganized, or generally cleaned up in the future.  Additional
+    content may be added.  In general, readers are encouraged to
+    verify any claims for themselves.
+
 This website follows an open data-driven approach: all claims are drawn
 from open and reproducible code-based analysis of data retrieved from the NSRDB.
 That means that you can verify the claims by running the code yourself.
