@@ -36,7 +36,7 @@ This project uses many open-source software packages, including:
 - `matplotlib <https://matplotlib.org/>`_: plotting
 - `pandas <https://pandas.pydata.org/docs>`_ and `numpy <https://numpy.org/doc/stable/>`_: number crunching
 - `sphinx <https://www.sphinx-doc.org>`_, `sphinx-book-theme <https://sphinx-book-theme.readthedocs.io>`_,
-   and `jupyter <https://jupyter.org/>`_: building the website
+  and `jupyter <https://jupyter.org/>`_: building the website
 - `python <https://www.python.org>`_: the foundation of all of the above
 - and many others
 
