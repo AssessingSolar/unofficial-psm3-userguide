@@ -11,6 +11,12 @@ or NREL.  As such, the information here should not be considered official docume
 Rather, it is a user-developed effort to document and demonstrate aspects of
 the PSM3 dataset and web API that are not necessarily documented anywhere else.
 
+.. warning::
+    This project is still a work in progress.  The current content may be
+    rewritten, reorganized, or generally cleaned up in the future.  Additional
+    content may be added.  In general, readers are encouraged to
+    verify any claims for themselves.
+
 This website follows an open data-driven approach: all claims are drawn
 from open and reproducible code-based analysis of data retrieved from the NSRDB.
 That means that you can verify the claims by running the code yourself.
@@ -29,7 +35,8 @@ This project uses many open-source software packages, including:
 - `cartopy <https://scitools.org.uk/cartopy/docs/latest/>`_ and `openlayers <https://openlayers.org/>`_: mapping
 - `matplotlib <https://matplotlib.org/>`_: plotting
 - `pandas <https://pandas.pydata.org/docs>`_ and `numpy <https://numpy.org/doc/stable/>`_: number crunching
-- `sphinx <https://www.sphinx-doc.org>`_ and `jupyter <https://jupyter.org/>`_: building the website
+- `sphinx <https://www.sphinx-doc.org>`_, `sphinx-book-theme <https://sphinx-book-theme.readthedocs.io>`_,
+  and `jupyter <https://jupyter.org/>`_: building the website
 - `python <https://www.python.org>`_: the foundation of all of the above
 - and many others
 
