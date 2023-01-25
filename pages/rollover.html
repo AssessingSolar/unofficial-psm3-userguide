@@ -545,7 +545,12 @@ div.rendered_html tbody tr:hover {
 <section id="End-of-year-“roll-over”">
 <h1>End-of-year “roll-over”<a class="headerlink" href="#End-of-year-“roll-over”" title="Permalink to this headline">#</a></h1>
 <p>Single-year datasets retrieved from the PSM3 API with <code class="docutils literal notranslate"><span class="pre">utc=false</span></code> have a quirk where the last few hours in the dataset are technically from the prior year.</p>
-<p>I guess the reason is due to a process roughly as follows: - The API grabs a calendar year of data in UTC - The API converts to local time, thereby shifting a few January hours into the previous December - The API takes those few hours in the previous year and puts them at the end of the dataset, thereby creating a complete calendar year again</p>
+<p>I guess the reason is due to a process roughly as follows:</p>
+<ul class="simple">
+<li><p>The API grabs a calendar year of data in UTC</p></li>
+<li><p>The API converts to local time, thereby shifting a few January hours into the previous December</p></li>
+<li><p>The API takes those few hours in the previous year and puts them at the end of the dataset, thereby creating a complete calendar year again</p></li>
+</ul>
 <p>In any case, it can create some minor inconsistencies in the last N hours of the dataset, where N is the location’s UTC offset. This notebook shows how it introduces discontinuities in temperature and humidity. The <a class="reference internal" href="solar-position.html"><span class="doc">Solar Position</span></a> notebook shows how it affects the solar position calculation.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:

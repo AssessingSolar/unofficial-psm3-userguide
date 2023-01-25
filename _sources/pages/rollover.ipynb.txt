@@ -11,6 +11,7 @@
     "where the last few hours in the dataset are technically from the prior year.\n",
     "\n",
     "I guess the reason is due to a process roughly as follows:\n",
+    "\n",
     "- The API grabs a calendar year of data in UTC\n",
     "- The API converts to local time, thereby shifting a few January hours into the previous December\n",
     "- The API takes those few hours in the previous year and puts them at the end\n",
