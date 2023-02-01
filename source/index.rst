@@ -55,5 +55,5 @@ This project uses many open-source software packages, including:
    pages/spatial-extent
    pages/map
    pages/tmy-vs-single
-   pages/precision
+   pages/numerical-precision
    pages/2300-artifact
