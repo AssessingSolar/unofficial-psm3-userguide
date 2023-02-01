@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Cloudy-skies: DISC &#8212; Unofficial PSM3 User&#39;s Guide</title>
+    <title>Numerical Precision &#8212; Unofficial PSM3 User&#39;s Guide</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -35,8 +35,8 @@
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Data Aggregation: 5 to 30/60 minute" href="data-aggregation.html" />
-    <link rel="prev" title="The Unofficial PSM3 User’s Guide" href="../index.html" />
+    <link rel="next" title="23:00 UTC Artifact" href="2300-artifact.html" />
+    <link rel="prev" title="TMY versus Single-Year" href="tmy-vs-single.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -89,8 +89,8 @@
  </span>
 </p>
 <ul class="current nav bd-sidenav">
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="cloudy-disc.html">
    Cloudy-skies: DISC
   </a>
  </li>
@@ -139,8 +139,8 @@
    TMY versus Single-Year
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="numerical-precision.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Numerical Precision
   </a>
  </li>
@@ -235,7 +235,7 @@ title="Source repository"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="../_sources/pages/cloudy-disc.ipynb.txt"
+        <a href="../_sources/pages/numerical-precision.ipynb.txt"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -284,7 +284,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Cloudy-skies: DISC</h1>
+                <h1>Numerical Precision</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -552,20 +552,18 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<section id="Cloudy-skies:-DISC">
-<h1>Cloudy-skies: DISC<a class="headerlink" href="#Cloudy-skies:-DISC" title="Permalink to this headline">#</a></h1>
-<p>The NSRDB <a class="reference external" href="https://nsrdb.nrel.gov/data-sets/us-data">website</a> claims that the DISC model is used for cloudy-sky GHI decomposition:</p>
-<blockquote>
-<div><p>PSM uses a two-step process where cloud properties are retrieved using the adapted PATMOS-X model, which are then used as inputs to REST2 for clear sky and FARMS for cloudy sky radiation calculations. REST2 calculates both DNI and GHI. FARMS calculates GHI, and the DISC model is then used to calculate DNI.</p>
-</div></blockquote>
-<p>Let’s see if we can recreate it using pvlib.</p>
+<section id="Numerical-Precision">
+<h1>Numerical Precision<a class="headerlink" href="#Numerical-Precision" title="Permalink to this headline">#</a></h1>
+<p>The data served by the PSM3 API has limited numerical precision, and that precision varies by variable. Many variables, including the various irradiance quantities, are limited to integer precision. Some variables have one, two, or four digits after the decimal point. Additionally, for variables served by multiple endpoints (e.g. GHI is available at both hourly and 5-minute endpoints), the precision does not change between endpoints.</p>
+<p>Note that some ostensibly numerical variables are actually categorical (e.g. <code class="docutils literal notranslate"><span class="pre">fill_flag</span></code> and <code class="docutils literal notranslate"><span class="pre">cloud_type</span></code>); this notebook excludes those and considers only “true” numerical variables.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pvlib</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 </pre></div>
 </div>
 </div>
@@ -573,99 +571,72 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lat</span><span class="p">,</span> <span class="n">lon</span> <span class="o">=</span> <span class="mi">40</span><span class="p">,</span> <span class="o">-</span><span class="mi">80</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># PSM3 API request parameter cases</span>
 
-<span class="n">df</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="n">pvlib</span><span class="o">.</span><span class="n">iotools</span><span class="o">.</span><span class="n">get_psm3</span><span class="p">(</span><span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="s1">&#39;DEMO_KEY&#39;</span><span class="p">,</span> <span class="s1">&#39;assessingsolar@gmail.com&#39;</span><span class="p">,</span>
-                                  <span class="n">names</span><span class="o">=</span><span class="mi">2018</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">map_variables</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">leap_day</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                  <span class="n">attributes</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;ghi&#39;</span><span class="p">,</span> <span class="s1">&#39;dni&#39;</span><span class="p">,</span> <span class="s1">&#39;dhi&#39;</span><span class="p">,</span> <span class="s1">&#39;clearsky_ghi&#39;</span><span class="p">,</span> <span class="s1">&#39;solar_zenith_angle&#39;</span><span class="p">,</span> <span class="s1">&#39;surface_pressure&#39;</span><span class="p">,</span> <span class="s1">&#39;air_temperature&#39;</span><span class="p">,</span> <span class="s1">&#39;cloud_type&#39;</span><span class="p">])</span>
+<span class="n">base_attributes</span> <span class="o">=</span> <span class="p">[</span>  <span class="c1"># attributes available at all endpoints</span>
+    <span class="s1">&#39;ghi&#39;</span><span class="p">,</span> <span class="s1">&#39;dni&#39;</span><span class="p">,</span> <span class="s1">&#39;dhi&#39;</span><span class="p">,</span> <span class="s1">&#39;air_temperature&#39;</span><span class="p">,</span> <span class="s1">&#39;wind_speed&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;wind_direction&#39;</span><span class="p">,</span> <span class="s1">&#39;surface_albedo&#39;</span><span class="p">,</span> <span class="s1">&#39;surface_pressure&#39;</span><span class="p">,</span> <span class="s1">&#39;dew_point&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">extra_attributes</span> <span class="o">=</span> <span class="p">[</span>  <span class="c1"># attributes only for at 5-min and hourly endpoints</span>
+    <span class="s1">&#39;relative_humidity&#39;</span><span class="p">,</span> <span class="s1">&#39;total_precipitable_water&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;clearsky_ghi&#39;</span><span class="p">,</span> <span class="s1">&#39;clearsky_dni&#39;</span><span class="p">,</span> <span class="s1">&#39;clearsky_dhi&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;solar_zenith_angle&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">cases</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;TMY&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;attributes&#39;</span><span class="p">:</span> <span class="n">base_attributes</span><span class="p">,</span>
+        <span class="s1">&#39;names&#39;</span><span class="p">:</span> <span class="s1">&#39;tmy&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;interval&#39;</span><span class="p">:</span> <span class="mi">60</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;Hourly&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;attributes&#39;</span><span class="p">:</span> <span class="n">base_attributes</span> <span class="o">+</span> <span class="n">extra_attributes</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;ghuv-280-400&#39;</span><span class="p">,</span> <span class="s1">&#39;ghuv-295-385&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;names&#39;</span><span class="p">:</span> <span class="mi">2020</span><span class="p">,</span>
+        <span class="s1">&#39;interval&#39;</span><span class="p">:</span> <span class="mi">60</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;5-min&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;attributes&#39;</span><span class="p">:</span> <span class="n">base_attributes</span> <span class="o">+</span> <span class="n">extra_attributes</span><span class="p">,</span>
+        <span class="s1">&#39;names&#39;</span><span class="p">:</span> <span class="mi">2020</span><span class="p">,</span>
+        <span class="s1">&#39;interval&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </div>
-<p>As I understand it, “cloudy sky” refers to anything that isn’t perfectly clear. As such, any deviation between GHI and clear-sky GHI indicates cloudy skies in the PSM3 model:</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">is_clear</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;ghi_clear&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ghi&#39;</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mf">0.01</span>
-<span class="n">cloudy</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">is_clear</span><span class="p">,</span> <span class="p">:]</span>
-</pre></div>
-</div>
-</div>
-<p>It turns out to be necessary to use a modified solar constant to match the PSM3 values. pvlib’s DISC implementation hardcodes the solar constant at 1367.0, so here’s a modified version that takes the solar constant as an optional parameter:</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pvlib.irradiance</span> <span class="kn">import</span> <span class="n">get_extra_radiation</span><span class="p">,</span> <span class="n">clearness_index</span><span class="p">,</span> <span class="n">_disc_kn</span>
-<span class="kn">from</span> <span class="nn">pvlib</span> <span class="kn">import</span> <span class="n">atmosphere</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">precisions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
 
-<span class="k">def</span> <span class="nf">my_disc</span><span class="p">(</span><span class="n">ghi</span><span class="p">,</span> <span class="n">solar_zenith</span><span class="p">,</span> <span class="n">datetime_or_doy</span><span class="p">,</span> <span class="n">pressure</span><span class="o">=</span><span class="mi">101325</span><span class="p">,</span>
-            <span class="n">min_cos_zenith</span><span class="o">=</span><span class="mf">0.065</span><span class="p">,</span> <span class="n">max_zenith</span><span class="o">=</span><span class="mi">87</span><span class="p">,</span> <span class="n">max_airmass</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">sc</span><span class="o">=</span><span class="mf">1367.0</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">kwargs</span> <span class="ow">in</span> <span class="n">cases</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">df</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="n">pvlib</span><span class="o">.</span><span class="n">iotools</span><span class="o">.</span><span class="n">get_psm3</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="o">-</span><span class="mi">80</span><span class="p">,</span> <span class="s1">&#39;DEMO_KEY&#39;</span><span class="p">,</span> <span class="s1">&#39;assessingsolar@gmail.com&#39;</span><span class="p">,</span>
+                                      <span class="n">map_variables</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">leap_day</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span> <span class="s1">&#39;Month&#39;</span><span class="p">,</span> <span class="s1">&#39;Day&#39;</span><span class="p">,</span> <span class="s1">&#39;Hour&#39;</span><span class="p">,</span> <span class="s1">&#39;Minute&#39;</span><span class="p">])</span>
 
-    <span class="n">I0</span> <span class="o">=</span> <span class="n">get_extra_radiation</span><span class="p">(</span><span class="n">datetime_or_doy</span><span class="p">,</span> <span class="n">sc</span><span class="p">,</span> <span class="s1">&#39;spencer&#39;</span><span class="p">)</span>
-
-    <span class="n">kt</span> <span class="o">=</span> <span class="n">clearness_index</span><span class="p">(</span><span class="n">ghi</span><span class="p">,</span> <span class="n">solar_zenith</span><span class="p">,</span> <span class="n">I0</span><span class="p">,</span> <span class="n">min_cos_zenith</span><span class="o">=</span><span class="n">min_cos_zenith</span><span class="p">,</span>
-                         <span class="n">max_clearness_index</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-
-    <span class="n">am</span> <span class="o">=</span> <span class="n">atmosphere</span><span class="o">.</span><span class="n">get_relative_airmass</span><span class="p">(</span><span class="n">solar_zenith</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;kasten1966&#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">pressure</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">am</span> <span class="o">=</span> <span class="n">atmosphere</span><span class="o">.</span><span class="n">get_absolute_airmass</span><span class="p">(</span><span class="n">am</span><span class="p">,</span> <span class="n">pressure</span><span class="p">)</span>
-
-    <span class="n">Kn</span><span class="p">,</span> <span class="n">am</span> <span class="o">=</span> <span class="n">_disc_kn</span><span class="p">(</span><span class="n">kt</span><span class="p">,</span> <span class="n">am</span><span class="p">,</span> <span class="n">max_airmass</span><span class="o">=</span><span class="n">max_airmass</span><span class="p">)</span>
-    <span class="n">dni</span> <span class="o">=</span> <span class="n">Kn</span> <span class="o">*</span> <span class="n">I0</span>
-
-    <span class="n">bad_values</span> <span class="o">=</span> <span class="p">(</span><span class="n">solar_zenith</span> <span class="o">&gt;</span> <span class="n">max_zenith</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">ghi</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">dni</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="n">dni</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">bad_values</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">dni</span><span class="p">)</span>
-
-    <span class="n">output</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="n">output</span><span class="p">[</span><span class="s1">&#39;dni&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dni</span>
-    <span class="n">output</span><span class="p">[</span><span class="s1">&#39;kt&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kt</span>
-    <span class="n">output</span><span class="p">[</span><span class="s1">&#39;airmass&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">am</span>
-
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">datetime_or_doy</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DatetimeIndex</span><span class="p">):</span>
-        <span class="n">output</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">datetime_or_doy</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">output</span>
+    <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">df</span><span class="p">:</span>
+        <span class="n">step</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]))))</span>
+        <span class="n">precisions</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">column</span><span class="p">,</span> <span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="n">step</span>
 <br/></pre></div>
 </div>
 </div>
-<p>Another difference is that PSM3 appears to have different validity checks, so we modify those as well:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">disc</span> <span class="o">=</span> <span class="n">my_disc</span><span class="p">(</span><span class="n">cloudy</span><span class="p">[</span><span class="s1">&#39;ghi&#39;</span><span class="p">],</span> <span class="n">cloudy</span><span class="p">[</span><span class="s1">&#39;solar_zenith&#39;</span><span class="p">],</span> <span class="n">cloudy</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">cloudy</span><span class="p">[</span><span class="s1">&#39;pressure&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="n">min_cos_zenith</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">max_zenith</span><span class="o">=</span><span class="mf">88.765</span><span class="p">,</span> <span class="n">max_airmass</span><span class="o">=</span><span class="mf">10e10</span><span class="p">,</span> <span class="n">sc</span><span class="o">=</span><span class="mf">1361.2</span><span class="p">)</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">cloudy</span><span class="p">[</span><span class="s1">&#39;dni&#39;</span><span class="p">],</span> <span class="n">disc</span><span class="p">[</span><span class="s1">&#39;dni&#39;</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;DISC DNI&#39;</span><span class="p">)</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">cloudy</span><span class="p">[</span><span class="s1">&#39;dni&#39;</span><span class="p">],</span> <span class="n">cloudy</span><span class="p">[</span><span class="s1">&#39;dni&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">disc</span><span class="p">[</span><span class="s1">&#39;dni&#39;</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Difference (PSM3 $-$ DISC)&#39;</span><span class="p">)</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;PSM3 Cloudy-Sky DNI&#39;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">precisions</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;Hourly&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">logy</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Precision (in returned units)&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Text(0.5, 0, &#39;PSM3 Cloudy-Sky DNI&#39;)
-</pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/pages_cloudy-disc_8_1.png" src="../_images/pages_cloudy-disc_8_1.png" />
+<img alt="../_images/pages_numerical-precision_4_0.png" src="../_images/pages_numerical-precision_4_0.png" />
 </div>
 </div>
-<p>This is pretty close, but obviously not perfect. What’s the difference?</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> watermark
@@ -678,22 +649,14 @@ Text(0.5, 0, &#39;PSM3 Cloudy-Sky DNI&#39;)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Last updated: 2022-09-22 19:42:51
+Last updated: 2023-02-01 09:23:40
 
-numpy     : 1.22.3
+numpy     : 1.23.4
+matplotlib: 3.6.2
 pvlib     : 0.9.3
-pandas    : 1.5.0
-matplotlib: 3.5.2
+pandas    : 1.5.2
 
 </pre></div></div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
 </div>
 </section>
 
@@ -705,17 +668,17 @@ matplotlib: 3.5.2
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="../index.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="tmy-vs-single.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">The Unofficial PSM3 User’s Guide</p>
+            <p class="prev-next-title">TMY versus Single-Year</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="data-aggregation.html" title="next page">
+    <a class='right-next' id="next-link" href="2300-artifact.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Data Aggregation: 5 to 30/60 minute</p>
+        <p class="prev-next-title">23:00 UTC Artifact</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
