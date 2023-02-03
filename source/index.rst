@@ -56,4 +56,5 @@ This project uses many open-source software packages, including:
    pages/map
    pages/tmy-vs-single
    pages/numerical-precision
+   pages/uv-dose
    pages/2300-artifact
