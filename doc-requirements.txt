@@ -1,4 +1,4 @@
 sphinx==4.5.0
 nbsphinx==0.8.9
 sphinx-book-theme==0.3.3
-ipython==8.6.0
+ipython==8.10.0
