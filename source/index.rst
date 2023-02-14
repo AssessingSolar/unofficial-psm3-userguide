@@ -57,3 +57,5 @@ This project uses many open-source software packages, including:
    pages/tmy-vs-single
    pages/numerical-precision
    pages/2300-artifact
+   pages/albedo
+   pages/references
