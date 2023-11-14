@@ -731,7 +731,13 @@ Interval 2:                            --------------------
 <img alt="../_images/pages_data-aggregation_11_0.png" src="../_images/pages_data-aggregation_11_0.png" />
 </div>
 </div>
-<p>The 60-minute values are dead simple: they’re actually just every other 30-minute value. Therefore, they actually reflect the average only over the 30 minutes centered on the timestamp, not the entire hour. Other than simplicity and not having to store a separate dataset, it’s not clear to me why this is a good idea – I’d have thought that extending the above approach (average of thirteen 5-minute values) would make more sense.</p>
+<p>The 60-minute values are dead simple: they’re actually just every other 30-minute value. Therefore, they actually reflect the average only over the 30 minutes centered on the timestamp, not the entire hour. Here’s an ASCII illustrattion:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Timestamps: 10 15 20 25 30 35 40 45 50 55 00 05 10 15 20 25 30 35 40 45 50
+Interval 1:    --------------------
+Interval 2:                                        --------------------
+</pre></div>
+</div>
+<p>Other than simplicity and not having to store a separate dataset, it’s not clear to me why this is a good idea – I’d have thought that extending the above approach (average of thirteen 5-minute values) would make more sense.</p>
 <p>Regardless, let’s show that it’s true:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
